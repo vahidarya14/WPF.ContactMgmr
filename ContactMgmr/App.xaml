@@ -1,0 +1,26 @@
+﻿<Application x:Class="ContactMgr.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/A.WPF;component/Styles/TopMenuGrid.xaml" />
+                <ResourceDictionary Source="/A.WPF;component/Styles/MyButtonStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/TextBoxBaseControlTemplate.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/LeftPanelColor.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/Button.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/ButtonFlatSquered.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/ToggleButton.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/TextBox.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/Scrollbar.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/ComboBox.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/MenuAndContextMenu.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/SwitchOnOff.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        
+    </Application.Resources>
+</Application>

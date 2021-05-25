@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="SwitchOnOff" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Name="border" BorderThickness="0.2" Padding="0" Background="White" MaxHeight="33" MinWidth="29"  CornerRadius="12">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#BEBEBE" Opacity="0.9" ShadowDepth=".3" BlurRadius=".3" />
+                        </Border.Effect>
+                        <DockPanel>
+                             <Border Height="22" Width="22" Margin="1" Background="White" CornerRadius="50" Name="SmallCircle" BorderThickness=".5" BorderBrush="DarkGray"  VerticalAlignment="Center" />
+                             <TextBlock   Name="TextBlock1" />
+                        </DockPanel>
+                       
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True" >
+                            <Setter Property="DockPanel.Dock" Value="Right" TargetName="SmallCircle" />
+                            <Setter Property="DockPanel.Dock" Value="Left" TargetName="TextBlock1" />
+                            <Setter Property="Text" Value="" TargetName="TextBlock1" />
+                            <Setter Property="Background" Value="#4Bd963" TargetName="border" />
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="DockPanel.Dock" Value="Left" TargetName="SmallCircle" />
+                            <Setter Property="DockPanel.Dock" Value="Right" TargetName="TextBlock1" />
+                            <Setter Property="Text" Value="" TargetName="TextBlock1" />
+                            <Setter TargetName="border" Property="Background" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

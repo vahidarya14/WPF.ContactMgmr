@@ -1,0 +1,231 @@
+﻿<Window x:Class="ContactMgr.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:convertors="clr-namespace:A.Convertors"
+        mc:Ignorable="d"
+         Title="Contact Manager" Height="600" Width="955.532" MinWidth="700" Icon="14.ico">
+
+    <Window.Resources>
+
+        <convertors:ContactToGroupNames x:Key="ContactToGroupNames" />
+        <convertors:ContactToCompany x:Key="ContactToCompany"/>
+        <convertors:GenderToString x:Key="GenderToString" />
+        <convertors:ContactToTooltip x:Key="ContactToTooltip" />
+        <convertors:BoolToHeight x:Key="BoolToHeight" />
+        <convertors:WidthToItemWidth x:Key="WidthToItemWidth" />
+        <convertors:BoolToVisible x:Key="BoolToVisible" />
+        <convertors:StringToMobileForm x:Key="StringToMobileForm" />
+        <convertors:StringToTellForm x:Key="StringToTellForm" />
+        <Style x:Key="MyButtonStyle2" TargetType="{x:Type Button}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderThickness="0" Padding="0"   >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170*" MaxWidth="250"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="367*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="2" VerticalAlignment="Top" Style="{StaticResource TopMenuGrid}" Margin="0,0,0,0">
+
+            <Button Margin="10,6,0,0" ToolTip="Add"    Click="ButtonBase_OnClick"  Style="{StaticResource MyButtonStyle}">
+                <Image  Source="img/user_blue_add2.png"  />
+            </Button>
+
+
+            <Button Margin="50,6,10,0" ToolTip="Export"   Style="{StaticResource MyButtonStyle}" Click="ExportClick" >
+                <Image  Source="img/excel.png"  />
+            </Button>
+
+            <TextBox   Margin="310,9,9.6,0" Height="26" MaxWidth="378" VerticalAlignment="Top" TextChanged="TextBoxTextChanged1" Name="SearchTextBox" Template="{StaticResource TextBoxBaseControlTemplate}" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+
+        </Grid>
+
+        <ComboBox Grid.Column="0" Margin="0,0,0,0" ItemsSource="{Binding Contacts,Converter={StaticResource ContactToGroupNames }}" Height="28" VerticalAlignment="Top"  Name="GroupNameTextBox" TabIndex="0"  SelectionChanged="GroupNameTextBoxSelectionChanged"/>
+
+        <ListBox Grid.Column="0" Margin="0,27,0,0.4" Name="ComponyListBox" ItemsSource="{Binding FilterdGroups,Converter={StaticResource ContactToCompany}}" BorderThickness="0,1,0,0"  Background="{StaticResource LeftPanelColor}"  BorderBrush="#FF919191" 
+                 SelectionChanged="ComponyListBox_OnSelectionChanged">
+            <ListBox.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightBlue"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey }" Color="#5B7289" />
+            </ListBox.Resources>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <!--<Setter Property="Background" Value="DarkRed"/>-->
+                    <Setter Property="Padding" Value="0,5,0,5"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" TargetName="Bd">
+                                            <Setter.Value>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#6BA4D9" Offset="0"/>
+                                                    <GradientStop Color="#3976C1" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" TargetName="Bd" >
+                                            <Setter.Value>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#8D9EB0" Offset="0"/>
+                                                    <GradientStop Color="#5B7289" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="true"/>
+                                            <Condition Property="IsFocused" Value="false"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Background" TargetName="Bd" Value="Red"/>
+                                    </MultiTrigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="true"/>
+                                            <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
+                                    </MultiTrigger>
+                                    <Trigger Property="IsEnabled" Value="false">
+                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <GridSplitter Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Center" Width="2" VerticalAlignment="Stretch" Background="#FFA0A0A0" ShowsPreview="True"  />
+
+        <ListBox Grid.Column="2" Margin="0,45,0,0" Name="ContaListBox" ItemsSource="{Binding FilterdContacts}" BorderThickness="0,1,0,0"  SelectedItem="{Binding SelectedContact}" IsSynchronizedWithCurrentItem="True" BorderBrush="#FF919191" ScrollViewer.VerticalScrollBarVisibility="Visible"  >
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                    <Setter Property="BorderBrush" Value="#ff6C6C"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter  Property="BorderBrush" Value="Transparent" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate >
+                <DataTemplate >
+
+                    <Button Background="Transparent" PreviewMouseUp="ContaListBoxMouseUp" MouseDoubleClick="DoubleClickEditClick" BorderThickness="0" Padding="0"
+                           Style="{StaticResource MyButtonStyle2}"
+                            >
+                        <Button.ToolTip>
+                            <Binding Converter="{StaticResource ContactToTooltip}"></Binding>
+                        </Button.ToolTip>
+                        <Grid Background="White"  MouseDown="GridGotFocus1" >
+                            <StackPanel  Width="{Binding ElementName=ContaListBox, Path=ActualWidth, Converter={StaticResource WidthToItemWidth}}"  Margin="0" HorizontalAlignment="Right"  >
+                                <TextBlock Text="{Binding Id}" Visibility="Hidden"/>
+                                <TextBlock FontWeight="Bold" HorizontalAlignment="Right" >
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat=" {0}  {1}">
+                                            <Binding Path="Gender" Converter="{StaticResource GenderToString}" />
+                                            <Binding Path="Name" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Text="{Binding Mobile,StringFormat='Mobile: {0}',Converter={StaticResource StringToMobileForm}}" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding Tel,StringFormat='Tel: {0}',Converter={StaticResource StringToTellForm}}" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding Company,StringFormat='Company: {0}'}" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding Title,StringFormat='Title: {0}'}" HorizontalAlignment="Right"/>
+
+                                <ListBox ItemsSource="{Binding ExtraFields}" Visibility="{Binding ExtraFields,Converter={convertors:ListCountToVisible}}" BorderThickness="0" IsEnabled="False" Background="Transparent">
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                            <Setter Property="Background" Value="#C6DAE1C0"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Margin" Value="0"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter  Property="BorderBrush" Value="Transparent" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock HorizontalAlignment="Right" >
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat=" {0} : {1}">
+                                                        <Binding Path="Key"></Binding>
+                                                        <Binding Path="Value"></Binding>
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <StackPanel Orientation="Vertical"  Visibility="{Binding IsEditable,Converter={StaticResource BoolToVisible}}" Height="{Binding IsEditable,Converter={StaticResource BoolToHeight}}"
+                                             MaxHeight="130">
+
+                                    <TextBlock Text="{Binding EMail,StringFormat='Email: {0}'}" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding WebSite,StringFormat='WebSite: {0}'}" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding Fax,StringFormat='Fax: {0}',Converter={StaticResource StringToTellForm}}" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding Extenssion,StringFormat='Extenssion: {0}'}" HorizontalAlignment="Right"/>
+                                    <TextBlock Text="{Binding Remark,StringFormat='Remark: {0}'}" HorizontalAlignment="Right"  />
+                                </StackPanel>
+                                <CheckBox IsChecked="{Binding IsEditable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden"/>
+
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsEditable,Converter={StaticResource BoolToVisible}}"  VerticalAlignment="Center" HorizontalAlignment="Left">
+
+                                <Button   Height="35"  Width="35" Margin="2" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="CopyClick" >
+                                    <Image  Source="img/copy.png"  />
+                                </Button>
+                                <Button   Width="35" Height="35" Margin="2"  Click="EditClick">
+                                    <Image  Source="img/edit.png"  />
+                                </Button>
+                                <Button   Width="35" Height="35" Margin="2"  CommandParameter="{Binding}" Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Window}},Path=DataContext.DeleteClick}" >
+                                    <Image  Source="img/delete.png"  />
+                                </Button>
+                            </StackPanel>
+                            <Border BorderBrush="#8C8C8C" BorderThickness="0,0,0,1"></Border>
+                        </Grid>
+                    </Button>
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+
+
+</Window>

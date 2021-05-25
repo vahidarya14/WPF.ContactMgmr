@@ -1,0 +1,172 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style TargetType="ToggleButton" x:Key="TopBtn">
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Name="border" BorderThickness="0" Padding="0,5" Background="White"  CornerRadius="5">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#BEBEBE" Opacity="0.9" ShadowDepth=".3" BlurRadius=".3" />
+                        </Border.Effect>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True" >
+                            <Setter Property="Background" Value="DarkGray" TargetName="border" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
+                            <Setter TargetName="border" Property="Background" >
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#6DB0F6" Offset="0"/>
+                                        <GradientStop Color="#086DF6" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#00A7A7A7" />
+                            <Setter TargetName="border" Property="Background" Value="#99EFEFEF" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+
+       
+     
+    </Style>
+
+
+    <Style TargetType="ToggleButton" x:Key="MiddleBtn" BasedOn="{StaticResource TopBtn}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Name="border" BorderThickness="0" Padding="0,5" Background="White"  CornerRadius="0">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#BEBEBE" Opacity="0.9" ShadowDepth=".3" BlurRadius=".3" />
+                        </Border.Effect>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True" >
+                            <Setter Property="Background" Value="#FF7C7C7C" TargetName="border" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
+                            <Setter TargetName="border" Property="Background" >
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#6DB0F6" Offset="0"/>
+                                        <GradientStop Color="#086DF6" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#00A7A7A7" />
+                            <Setter TargetName="border" Property="Background" Value="#99EFEFEF" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style TargetType="ToggleButton" x:Key="LeftBtn" BasedOn="{StaticResource TopBtn}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Name="border" BorderThickness="0" Padding="0,5" Background="White"  CornerRadius="5,0,0,5">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#BEBEBE" Opacity="0.9" ShadowDepth=".3" BlurRadius=".3" />
+                        </Border.Effect>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True" >
+                            <Setter Property="Background" Value="#FF7C7C7C" TargetName="border" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
+                            <Setter TargetName="border" Property="Background" >
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#6DB0F6" Offset="0"/>
+                                        <GradientStop Color="#086DF6" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#00A7A7A7" />
+                            <Setter TargetName="border" Property="Background" Value="#99EFEFEF" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style TargetType="ToggleButton" x:Key="RightBtn" BasedOn="{StaticResource TopBtn}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Name="border" BorderThickness="0" Padding="0,5" Background="White"  CornerRadius="0,5,5,0">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#BEBEBE" Opacity="0.9" ShadowDepth=".3" BlurRadius=".3" />
+                        </Border.Effect>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True" >
+                            <Setter Property="Background" Value="#FF7C7C7C" TargetName="border" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
+                            <Setter TargetName="border" Property="Background" >
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#6DB0F6" Offset="0"/>
+                                        <GradientStop Color="#086DF6" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#00A7A7A7" />
+                            <Setter TargetName="border" Property="Background" Value="#99EFEFEF" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+
+</ResourceDictionary>

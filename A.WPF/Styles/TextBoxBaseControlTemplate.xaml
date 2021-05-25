@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   
+                    >
+
+
+    <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+
+        <Border Background="White" x:Name="Bd" BorderBrush="#E5E5E5" BorderThickness=".2,.2,.2,1.4" CornerRadius="4" Padding="5,3,5,0" Margin="0,0,0,0">
+            <ScrollViewer x:Name="PART_ContentHost"/>
+        </Border>
+
+
+    </ControlTemplate>
+</ResourceDictionary>

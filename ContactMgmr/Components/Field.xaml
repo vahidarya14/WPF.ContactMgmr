@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="ContactMgr.Components.Field"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+              Width="307" Height="28" Loaded="UserControlLoaded1">
+    <Grid >
+        <TextBlock Text="Name" Height="23" VerticalAlignment="Top" Name="lbl" TextAlignment="Right" HorizontalAlignment="Left" Width="113" Margin="0,5,0,0"  >
+            <TextBlock.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Change Title" Click="MenuItemClick1"/>
+                </ContextMenu>
+            </TextBlock.ContextMenu>
+        </TextBlock>
+        <TextBox Margin="120,0,0,0" Height="28" VerticalAlignment="Top"  TabIndex="0" Name="txt" HorizontalAlignment="Left" Width="186" PreviewMouseDown="TxtOnMouseDown" />
+
+        <TextBox Margin="0,0,0,0" Height="28" VerticalAlignment="Top"  TabIndex="0" Name="titleTxt" HorizontalAlignment="Left" Width="201" Background="#FFF0F3D7" Visibility="Hidden" TextChanged="ChangeTitle" KeyDown="TitleTxtKeyDown1" />
+    </Grid>
+</UserControl>

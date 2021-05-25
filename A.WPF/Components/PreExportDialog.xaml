@@ -1,0 +1,11 @@
+﻿<Window x:Class="A.WPF.Components.PreExportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" ShowInTaskbar="False"  Topmost="True"
+        Title="" Height="424" Width="257" Loaded="WindowLoaded1" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Name="pnl"  CanVerticallyScroll="True" ScrollViewer.CanContentScroll="True">
+
+        </StackPanel>
+    </ScrollViewer>
+   
+</Window>
