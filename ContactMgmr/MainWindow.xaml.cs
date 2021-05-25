@@ -138,21 +138,8 @@ namespace ContactMgr
         }
 
 
-        private TextBlock lastone;
         private void ListBoxItemMouseDoubleClick1(object sender, RoutedEventArgs routedEventArgs)
         {
-            //if (lastone != null)
-            //{
-            //    ((Button)lastone.Parent).Background = Brushes.Transparent;
-            //    ((Button)lastone.Parent).Foreground = Brushes.Black;
-            //    ((Button)lastone.Parent).FontWeight = FontWeights.Normal;
-
-            //}
-            //lastone = ((TextBlock)((Button)sender).Content);
-            //((Button)lastone.Parent).Background = new SolidColorBrush(Color.FromArgb(255, 117, 160, 196));
-            //((Button)lastone.Parent).Foreground = Brushes.Black;
-            //((Button)lastone.Parent).FontWeight = FontWeights.Bold;
-
             var txt = (string)sender;// ((TextBlock)((Button)sender).Content).Text;
             if (txt == null) txt = StaticPublic.All;
             if (txt == StaticPublic.All)
