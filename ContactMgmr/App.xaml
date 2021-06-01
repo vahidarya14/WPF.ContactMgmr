@@ -18,6 +18,7 @@
                 <ResourceDictionary Source="/A.WPF;component/Styles/ComboBox.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/A.WPF;component/Styles/MenuAndContextMenu.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/A.WPF;component/Styles/SwitchOnOff.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/A.WPF;component/Styles/TextBlockTitle.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

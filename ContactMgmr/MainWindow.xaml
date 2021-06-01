@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:convertors="clr-namespace:A.Convertors"
         mc:Ignorable="d"
-         Title="Contact Manager" Height="600" Width="955.532" MinWidth="700" Icon="14.ico">
+        WindowStartupLocation="CenterScreen"
+         Title="Contact Manager" Height="600" Width="596.091" MinWidth="700" Icon="14.ico">
 
     <Window.Resources>
 
@@ -50,7 +51,7 @@
                 <Image  Source="img/excel.png"  />
             </Button>
 
-            <TextBox   Margin="310,9,9.6,0" Height="26" MaxWidth="378" VerticalAlignment="Top" TextChanged="TextBoxTextChanged1" Name="SearchTextBox" Template="{StaticResource TextBoxBaseControlTemplate}" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+            <TextBox   Margin="282,9,9.6,0" Height="26" MaxWidth="378" VerticalAlignment="Top" TextChanged="TextBoxTextChanged1" Name="SearchTextBox" Template="{StaticResource TextBoxBaseControlTemplate}" HorizontalAlignment="Stretch" TextAlignment="Center"/>
 
         </Grid>
 
@@ -147,13 +148,13 @@
                     <Button Background="Transparent" PreviewMouseUp="ContaListBoxMouseUp" MouseDoubleClick="DoubleClickEditClick" BorderThickness="0" Padding="0"
                            Style="{StaticResource MyButtonStyle2}"
                             >
-                        <Button.ToolTip>
+                        <!--<Button.ToolTip>
                             <Binding Converter="{StaticResource ContactToTooltip}"></Binding>
-                        </Button.ToolTip>
+                        </Button.ToolTip>-->
                         <Grid Background="White"  MouseDown="GridGotFocus1" >
-                            <StackPanel  Width="{Binding ElementName=ContaListBox, Path=ActualWidth, Converter={StaticResource WidthToItemWidth}}"  Margin="0" HorizontalAlignment="Right"  >
+                            <StackPanel  Width="{Binding ElementName=ContaListBox, Path=ActualWidth, Converter={StaticResource WidthToItemWidth}}"  Margin="0" HorizontalAlignment="Left"  >
                                 <TextBlock Text="{Binding Id}" Visibility="Hidden"/>
-                                <TextBlock FontWeight="Bold" HorizontalAlignment="Right" >
+                                <TextBlock FontWeight="Bold" HorizontalAlignment="Center" FontSize="15">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat=" {0}  {1}">
                                             <Binding Path="Gender" Converter="{StaticResource GenderToString}" />
@@ -161,17 +162,35 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
-                                <TextBlock Text="{Binding Mobile,StringFormat='Mobile: {0}',Converter={StaticResource StringToMobileForm}}" HorizontalAlignment="Right"/>
-                                <TextBlock Text="{Binding Tel,StringFormat='Tel: {0}',Converter={StaticResource StringToTellForm}}" HorizontalAlignment="Right"/>
-                                <TextBlock Text="{Binding Company,StringFormat='Company: {0}'}" HorizontalAlignment="Right"/>
-                                <TextBlock Text="{Binding Title,StringFormat='Title: {0}'}" HorizontalAlignment="Right"/>
+                                <TextBlock Foreground="Gray"  FlowDirection="RightToLeft" HorizontalAlignment="Center" FontSize="13">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat=" {0}- {1}">
+                                            <Binding Path="Title" />
+                                            <Binding Path="Company" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource TextBlockTitle}">Mobile:</TextBlock>
+                                    <TextBlock Text="{Binding Mobile,StringFormat=' {0}',Converter={StaticResource StringToMobileForm}}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource TextBlockTitle}">Tel:</TextBlock>
+                                    <TextBlock  >
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat=" {0} ({1})">
+                                                <Binding Path="Tel" />
+                                                <Binding Path="Extenssion" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
 
-                                <ListBox ItemsSource="{Binding ExtraFields}" Visibility="{Binding ExtraFields,Converter={convertors:ListCountToVisible}}" BorderThickness="0" IsEnabled="False" Background="Transparent">
+                                <ListBox ItemsSource="{Binding ExtraFields}"  BorderThickness="0" IsEnabled="False" Background="Transparent">
                                     <ListBox.ItemContainerStyle>
                                         <Style TargetType="ListBoxItem">
-                                            <Setter Property="HorizontalAlignment" Value="Right"/>
-                                            <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                            <Setter Property="Background" Value="#C6DAE1C0"/>
+                                            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                                            <Setter Property="Background" Value="#00DAE1C0"/>
                                             <Setter Property="Padding" Value="0"/>
                                             <Setter Property="Margin" Value="0"/>
                                             <Style.Triggers>
@@ -183,30 +202,44 @@
                                     </ListBox.ItemContainerStyle>
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock HorizontalAlignment="Right" >
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Key}" Style="{StaticResource TextBlockTitle}"></TextBlock>
+                                                                                            <TextBlock HorizontalAlignment="Left" >
                                                 <TextBlock.Text>
-                                                    <MultiBinding StringFormat=" {0} : {1}">
-                                                        <Binding Path="Key"></Binding>
-                                                        <Binding Path="Value"></Binding>
+                                                        <MultiBinding StringFormat=" {0} ">
+                                                            <Binding Path="Value"></Binding>
                                                     </MultiBinding>
                                                 </TextBlock.Text>
                                             </TextBlock>
+                                            </StackPanel>
+
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
-                                <StackPanel Orientation="Vertical"  Visibility="{Binding IsEditable,Converter={StaticResource BoolToVisible}}" Height="{Binding IsEditable,Converter={StaticResource BoolToHeight}}"
+                                <StackPanel Orientation="Vertical" 
                                              MaxHeight="130">
-
-                                    <TextBlock Text="{Binding EMail,StringFormat='Email: {0}'}" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="{Binding WebSite,StringFormat='WebSite: {0}'}" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="{Binding Fax,StringFormat='Fax: {0}',Converter={StaticResource StringToTellForm}}" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="{Binding Extenssion,StringFormat='Extenssion: {0}'}" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="{Binding Remark,StringFormat='Remark: {0}'}" HorizontalAlignment="Right"  />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource TextBlockTitle}">Email:</TextBlock>
+                                        <TextBlock Text="{Binding EMail}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource TextBlockTitle}">WebSite:</TextBlock>
+                                        <TextBlock Text="{Binding WebSite}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource TextBlockTitle}">Fax:</TextBlock>
+                                        <TextBlock Text="{Binding Fax,StringFormat=' {0}',Converter={StaticResource StringToTellForm}}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Style="{StaticResource TextBlockTitle}" >Remark:</TextBlock>
+                                        <TextBlock Text="{Binding Remark}" />
+                                    </StackPanel>
+                                
                                 </StackPanel>
                                 <CheckBox IsChecked="{Binding IsEditable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden"/>
 
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsEditable,Converter={StaticResource BoolToVisible}}"  VerticalAlignment="Center" HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding IsEditable,Converter={StaticResource BoolToVisible}}"  VerticalAlignment="Center" HorizontalAlignment="Right">
 
                                 <Button   Height="35"  Width="35" Margin="2" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="CopyClick" >
                                     <Image  Source="img/copy.png"  />
