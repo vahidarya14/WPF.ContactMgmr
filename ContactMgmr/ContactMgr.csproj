@@ -91,11 +91,13 @@
     <Compile Include="A.Convertors\ContactToGroupNames.cs" />
     <Compile Include="A.Convertors\ContactToTooltip.cs" />
     <Compile Include="A.Convertors\Convertors.StaticPublic.cs" />
+    <Compile Include="A.Convertors\CountToVisible.cs" />
     <Compile Include="A.Convertors\GenderToString.cs" />
     <Compile Include="A.Convertors\ListCountToVisible.cs" />
     <Compile Include="A.Convertors\RowToIndexConverter.cs" />
     <Compile Include="A.Convertors\StringToMobileForm.cs" />
     <Compile Include="A.Convertors\StringToTellForm.cs" />
+    <Compile Include="A.Convertors\StringToVisible.cs" />
     <Compile Include="A.Convertors\WidthToItemWidth.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

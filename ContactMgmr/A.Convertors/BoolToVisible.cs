@@ -7,10 +7,6 @@ namespace A.Convertors
 {
     public class BoolToVisible : ValueConverter
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var ss = (bool)value ? Visibility.Visible : Visibility.Hidden;
-            return ss;
-        }
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) => (bool)value ? Visibility.Visible : Visibility.Hidden;
     }
 }

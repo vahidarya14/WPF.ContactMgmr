@@ -14,7 +14,7 @@
                 <ResourceDictionary Source="/A.WPF;component/Styles/ButtonFlatSquered.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/A.WPF;component/Styles/ToggleButton.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/A.WPF;component/Styles/TextBox.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="/A.WPF;component/Styles/Scrollbar.xaml"></ResourceDictionary>
+                <!--<ResourceDictionary Source="/A.WPF;component/Styles/Scrollbar.xaml"></ResourceDictionary>-->
                 <ResourceDictionary Source="/A.WPF;component/Styles/ComboBox.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/A.WPF;component/Styles/MenuAndContextMenu.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="/A.WPF;component/Styles/SwitchOnOff.xaml"></ResourceDictionary>
