@@ -45,8 +45,8 @@
         <TextBlock Text="Fax" Margin="341,171,0,0" HorizontalAlignment="Left" Width="60"  Height="23" VerticalAlignment="Top" TextAlignment="Right"/>
         <TextBox Margin="119,134,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" x:Name="TellTextBox" TabIndex="3"/>
 
-        <TextBox Margin="406,134,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" x:Name="ExtenssionTextBox" TabIndex="3"/>
-        <TextBlock Text="Extenssion" Margin="340,139,0,0" HorizontalAlignment="Left" Width="60"  Height="23" VerticalAlignment="Top" TextAlignment="Right"/>
+        <TextBox Margin="406,134,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" x:Name="DomesticTextBox" TabIndex="3"/>
+        <TextBlock Text="Domestic" Margin="340,139,0,0" HorizontalAlignment="Left" Width="60"  Height="23" VerticalAlignment="Top" TextAlignment="Right"/>
 
         <TextBlock Text="Remark" Margin="67,270,0,0" HorizontalAlignment="Left" Width="48"  Height="23" VerticalAlignment="Top" TextAlignment="Right"/>
         <TextBox Margin="120,265,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="472" x:Name="RemarkTextBox" TabIndex="5"/>

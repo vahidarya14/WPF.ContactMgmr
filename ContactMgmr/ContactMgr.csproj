@@ -147,6 +147,10 @@
       <Project>{F27C84DA-AC5E-42B4-B215-7538123F24AD}</Project>
       <Name>A.WPF</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LightAccessORM\LightAccessORM.csproj">
+      <Project>{7F9FB3A5-A1D5-4EA7-8FC1-187BE72AF91B}</Project>
+      <Name>LightAccessORM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Serviecs\Serviecs.csproj">
       <Project>{660DB6CD-A14D-48FF-8C93-3A4DFBD0139D}</Project>
       <Name>Serviecs</Name>

@@ -58,7 +58,7 @@ namespace ContactMgr.view
             GroupNameTextBox.Text = _contact.GroupName;
             FaxTextBox.Text = _contact.Fax;
             TellTextBox.Text = _contact.Tel;
-            ExtenssionTextBox.Text = _contact.Extenssion;
+            DomesticTextBox.Text = _contact.Extenssion;
             GenderCombo.SelectedIndex = (int)_contact.Gender;
             RemarkTextBox.Text = _contact.Remark;
 
@@ -97,7 +97,7 @@ namespace ContactMgr.view
                         GroupName = GroupNameTextBox.Text,
                         Fax = FaxTextBox.Text,
                         Tel = TellTextBox.Text,
-                        Extenssion = ExtenssionTextBox.Text,
+                        Extenssion = DomesticTextBox.Text,
                         Gender = (Gender)GenderCombo.SelectedIndex,
                         Remark = RemarkTextBox.Text
                     };
@@ -122,7 +122,7 @@ namespace ContactMgr.view
                     _contact.GroupName = GroupNameTextBox.Text;
                     _contact.Fax = FaxTextBox.Text;
                     _contact.Tel = TellTextBox.Text;
-                    _contact.Extenssion = ExtenssionTextBox.Text;
+                    _contact.Extenssion = DomesticTextBox.Text;
                     _contact.ExtraFields = G1.Children.OfType<Field>().Where(a => a.Title != "" && a.Value != "").Select(a => new ExtraField { Key = a.Title, Value = a.Value }).ToList();
                     _contact.Gender = (Gender)GenderCombo.SelectedIndex;
                     _contact.Remark = RemarkTextBox.Text;

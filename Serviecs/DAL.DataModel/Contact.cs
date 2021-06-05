@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using LightAccessORM.Attributes;
+using System.Collections.Generic;
 
 namespace DAL.DataModel
 {
     public class Contact
     {
         public long Id { get; set; }
+
+        [FieldName("CName")]
         public string Name { get; set; }
         public string Title { get; set; }
         public string Mobile { get; set; }
@@ -14,11 +17,12 @@ namespace DAL.DataModel
         public string Address { get; set; }
         public string GroupName { get; set; }
         public string Fax { get; set; }
-        public string Extenssion { get; set; }
+        public string Extenssion { get; set; }//Domestic
         public string Tel { get; set; }
         public Gender Gender { get; set; }
         public string Remark { get; set; }
 
+        [Ignore]
         public bool IsEditable { get;set;}
         public List<ExtraField> ExtraFields { get; set; }
 
@@ -35,6 +39,8 @@ namespace DAL.DataModel
         Mis=2,
         _= 0
     }
+
+    [TableName("ContactExtraFiled")]
     public class ExtraField
     {
         public long Id { get; set; }

@@ -12,6 +12,7 @@ using DAL.DataModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Serviecs;
+using Serviecs.DAL.Access;
 using StaticPublic = Serviecs.StaticPublic;
 
 namespace ContactMgr.viewModel
@@ -21,7 +22,7 @@ namespace ContactMgr.viewModel
         private ObservableCollection<Contact> _filterdContacts;
         private ObservableCollection<Contact> _contacts;
         ObservableCollection<Contact> _filterdGroups;
-        readonly ContactRepository _access;
+        readonly DbAppContext _access;
         private Contact _copyiedContact;
         private ICommand _deleteClick;
 
@@ -41,7 +42,7 @@ namespace ContactMgr.viewModel
         {
             _contacts = new ObservableCollection<Contact>();
             _filterdContacts = new ObservableCollection<Contact>();
-            _access = new ContactRepository();
+            _access = new DbAppContext();
 
             CancelButtonClick=new Cmd(CancelButtonOnClick);
             AddButtonClick=new Cmd(AddButtonOnClick);
@@ -80,7 +81,7 @@ namespace ContactMgr.viewModel
             }
 
 
-            ((Panel)(usc).Parent).Children.Remove(usc);
+            ((Panel)usc.Parent).Children.Remove(usc);
         }
 
         public static string ReadJson()
@@ -100,14 +101,14 @@ namespace ContactMgr.viewModel
         public List<Contact> GetAll(Func<Contact, bool> predict = null)
         {
           
-            var list = _access.SelectContacts();
+            var list = _access.Contacts.Select();
 
             return predict == null ? list : list.Where(predict).ToList();
         }
 
         public int Add(Contact c)
         {
-            var ss = _access.Add(c);
+            var ss = _access.Contacts.Add(c);
 
             Contacts.Add(c);
             
@@ -121,7 +122,7 @@ namespace ContactMgr.viewModel
             if (dres != MessageBoxResult.Yes) return 0;
 
 
-            var ss = _access.Delete( c.Id);
+            var ss = _access.Contacts.Delete( c.Id);
 
             Contacts.Remove(c);
             FilterdContacts.Remove(c);
@@ -137,17 +138,7 @@ namespace ContactMgr.viewModel
         public int Edit(Contact c)
         {
   
-            _access.CommandText("UPDATE Contact SET " +
-                    "[CName]='" + c.Name + "',[Title]='" + c.Title + "',[Mobile]='" + c.Mobile + "',[Company]='" + c.Company + "',[WebSite]='" + c.WebSite + "',[EMail]='" + c.EMail +
-                    "',[Address]='" + c.Address + "',[GroupName]='" + c.GroupName + "',[Fax]='" + c.Fax + "',[Extenssion]='" + c.Extenssion + "',[Tel]='" + c.Tel + "',[Gender]='" + (int)c.Gender +
-                    "',[Remark]='"+c.Remark+
-                    "' WHERE [Id]="+c.Id);
-
-            var ss = _access.CommandText("DELETE FROM ContactExtraFiled WHERE [Contactid]=" + c.Id);
-            foreach (var extraField in c.ExtraFields)
-            {
-                ss = _access.CommandText("INSERT INTO ContactExtraFiled ([Key],[Value],[Contactid]) VALUES('" + extraField.Key + "','" + extraField.Value + "','" + c.Id + "')");
-            }
+           var ss= _access.Contacts.Update(c);
 
             FilterdContacts = Contacts;
 

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using Microsoft.Office.Interop.Access;
+using System;
 using System.Data;
 using System.Data.OleDb;
-using Microsoft.Office.Interop.Access;
 
-
-namespace DAL.Access
+namespace LightAccessORM
 {
     public enum AccessVersion { Auto, Ver2003, Ver2007, Ver2010, Ver2013, Ver2016, Ver2019 }
-
-
     public class Access
     {
         private readonly string _connectionstring;
@@ -32,7 +28,7 @@ namespace DAL.Access
         /// <summary> ساخت و اتصال به فایل با توجه به ادرس و ورژن اکسز  </summary>
         /// <param name="accessFileName">ادرس فایل اکسز</param>
         /// <param name="accessVersion">ورژن اکسز سیستم</param>
-        public Access(string accessFileName, AccessVersion accessVersion,string passWord= "majidsabzalian")
+        public Access(string accessFileName, AccessVersion accessVersion, string passWord = "majidsabzalian")
         {
             var connection20102007 = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={accessFileName};Jet OLEDB:Database Password={passWord};";
             var connection20132003 = $"Provider=Microsoft.Jet.OLEDB.4.0;Data Source={accessFileName};Jet OLEDB:Database Password={passWord};";
@@ -40,7 +36,7 @@ namespace DAL.Access
             if (accessVersion == AccessVersion.Auto)
                 accessVersion = GetOfficeVersion();
 
-            _connectionstring = accessVersion == AccessVersion.Ver2007 || accessVersion == AccessVersion.Ver2010  ? connection20102007: connection20132003 ;
+            _connectionstring = accessVersion == AccessVersion.Ver2007 || accessVersion == AccessVersion.Ver2010 ? connection20102007 : connection20132003;
 
             OpenConnection();
         }
@@ -84,20 +80,6 @@ namespace DAL.Access
             return long.Parse(reader.ToString());
         }
 
-        public ArrayList SelectCommand(string query)
-        {
-            Cmd.CommandText = query;
-            var reader = Cmd.ExecuteReader();
-
-            var rowList = new ArrayList();
-            while (reader != null && reader.Read())
-            {
-                var values = new object[reader.FieldCount];
-                //var i = reader.GetValues(values);
-                rowList.Add(values);
-            }
-            return rowList;
-        }
 
         public OleDbDataReader ExecuteReader(string query)
         {
@@ -122,7 +104,7 @@ namespace DAL.Access
             }
         }
 
-        public static AccessVersion GetOfficeVersion()
+        static AccessVersion GetOfficeVersion()
         {
             try
             {
@@ -151,9 +133,8 @@ namespace DAL.Access
             return AccessVersion.Ver2016;
         }
 
-        
+
 
 
     }
-
 }

@@ -2,12 +2,17 @@ using System.Collections.Generic;
 using System.Linq;
 using A.Extenssions;
 using DAL.DataModel;
+using LightAccessORM;
+using Serviecs;
 
 namespace DAL.Access
 {
     public class ContactRepository : Reposirory<Contact>
     {
-        public List<Contact> SelectContacts()
+
+        public ContactRepository():base(StaticPublic.MdbPath){}
+
+        public List<Contact> Select()
         {
             var reader = _cmd.ExecuteReader("Select * from Contact order by [Company]");
 
@@ -34,7 +39,6 @@ namespace DAL.Access
                     Remark = values[13].ToString(),
                 });
             }
-
             reader.Close();
 
             var extfid = SelectContactExtraFields("Select * from ContactExtraFiled");
@@ -68,28 +72,56 @@ namespace DAL.Access
         }
 
 
-        public override int Add(Contact c)
-        {
+        //public override int Add(Contact c)
+        //{
 
-            var ss = CommandText("INSERT INTO Contact ([CName],[Title],[Mobile], [Company],[WebSite],[EMail], [Address],[GroupName],[Fax],[Extenssion],[Tel],[Gender],[Remark])" +
-                                 " VALUES('" + c.Name + "','" + c.Title + "','" + c.Mobile + "','" + c.Company + "','" + c.WebSite + "','" + c.EMail + "','" + c.Address + "','" + c.GroupName + "','" + c.Fax + "','" + c.Extenssion + "','" + c.Tel + "','" + (int)c.Gender + "','" + c.Remark + "')");
-
-
-            foreach (var extraField in c.ExtraFields)
-                CommandText($"INSERT INTO ContactExtraFiled ([Key],[Value],[Contactid]) VALUES('{extraField.Key}','{extraField.Value}','{c.Id}'");
+        //    var ss = CommandText("INSERT INTO Contact ([CName],[Title],[Mobile], [Company],[WebSite],[EMail], [Address],[GroupName],[Fax],[Extenssion],[Tel],[Gender],[Remark])" +
+        //                         " VALUES('" + c.CName + "','" + c.Title + "','" + c.Mobile + "','" + c.Company + "','" + c.WebSite + "','" + c.EMail + "','" + c.Address + "','" + c.GroupName + "','" + c.Fax + "','" + c.Extenssion + "','" + c.Tel + "','" + (int)c.Gender + "','" + c.Remark + "')");
 
 
-            return ss;
-        }
+        //    foreach (var extraField in c.ExtraFields)
+        //        CommandText($"INSERT INTO ContactExtraFiled ([Key],[Value],[Contactid]) VALUES('{extraField.Key}','{extraField.Value}','{c.Id}'");
 
 
-        public override int Delete(long id)
+        //    return ss;
+        //}
+
+        //public int AddExtraFiled(ExtraField extraField, Contact c)
+        //{
+        //   return  CommandText("INSERT INTO ContactExtraFiled ([Key],[Value],[Contactid]) VALUES('" + extraField.Key + "','" + extraField.Value + "','" + c.Id + "')");
+
+        //}
+
+
+        //public override int Update(Contact c)
+        //{
+
+        //    CommandText("UPDATE Contact SET " +
+        //            "[CName]='" + c.Name + "',[Title]='" + c.Title + "',[Mobile]='" + c.Mobile + "',[Company]='" + c.Company + "',[WebSite]='" + c.WebSite + "',[EMail]='" + c.EMail +
+        //            "',[Address]='" + c.Address + "',[GroupName]='" + c.GroupName + "',[Fax]='" + c.Fax + "',[Extenssion]='" + c.Domestic + "',[Tel]='" + c.Tel + "',[Gender]='" + (int)c.Gender +
+        //            "',[Remark]='" + c.Remark +
+        //            "' WHERE [Id]=" + c.Id);
+
+        //    var ss = Delete("ContactExtraFiled", $"[Contactid]={c.Id}");
+        //    foreach (var extraField in c.ExtraFields)
+        //    {
+        //        ss = AddExtraFiled(extraField, c);
+        //    }
+
+        //    //FilterdContacts = Contacts;
+
+        //    return ss;
+
+        //}
+
+        public  int Delete(long id)
         {
             var ss = CommandText("DELETE FROM ContactExtraFiled WHERE [Contactid]=" + id);
-            ss = CommandText("DELETE FROM Contact WHERE [Id]=" + id);
+            ss = Delete( id,true);
 
             return ss;
         }
+
 
     }
 }

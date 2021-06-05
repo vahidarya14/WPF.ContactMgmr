@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A.WPF", "A.WPF\A.WPF.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serviecs", "Serviecs\Serviecs.csproj", "{660DB6CD-A14D-48FF-8C93-3A4DFBD0139D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{B37B4299-4228-4A79-B5A8-40357DF8C6B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightAccessORM", "LightAccessORM\LightAccessORM.csproj", "{7F9FB3A5-A1D5-4EA7-8FC1-187BE72AF91B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,16 @@ Global
 		{660DB6CD-A14D-48FF-8C93-3A4DFBD0139D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{660DB6CD-A14D-48FF-8C93-3A4DFBD0139D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{660DB6CD-A14D-48FF-8C93-3A4DFBD0139D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F9FB3A5-A1D5-4EA7-8FC1-187BE72AF91B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F9FB3A5-A1D5-4EA7-8FC1-187BE72AF91B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F9FB3A5-A1D5-4EA7-8FC1-187BE72AF91B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F9FB3A5-A1D5-4EA7-8FC1-187BE72AF91B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7F9FB3A5-A1D5-4EA7-8FC1-187BE72AF91B} = {B37B4299-4228-4A79-B5A8-40357DF8C6B3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D353EA43-9E75-4B51-99B1-F6AB5D45039C}
