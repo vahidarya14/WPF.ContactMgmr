@@ -69,6 +69,7 @@ namespace ContactMgr.view
               //G1.Children.OfType<Field>().Last();
                 ss.Title = f.Key;
                 ss.Value = f.Value;
+                ss.HiddenValue = f.Id.ToString();
             }
 
             if (windowMode == WindowMode.Edit)
@@ -123,7 +124,7 @@ namespace ContactMgr.view
                     _contact.Fax = FaxTextBox.Text;
                     _contact.Tel = TellTextBox.Text;
                     _contact.Extenssion = DomesticTextBox.Text;
-                    _contact.ExtraFields = G1.Children.OfType<Field>().Where(a => a.Title != "" && a.Value != "").Select(a => new ExtraField { Key = a.Title, Value = a.Value }).ToList();
+                    _contact.ExtraFields = G1.Children.OfType<Field>().Where(a => a.Title != "" && a.Value != "").Select(a => new ExtraField {Id=long.Parse(a.HiddenValue), Key = a.Title, Value = a.Value }).ToList();
                     _contact.Gender = (Gender)GenderCombo.SelectedIndex;
                     _contact.Remark = RemarkTextBox.Text;
 
@@ -159,7 +160,7 @@ namespace ContactMgr.view
                 VerticalAlignment = VerticalAlignment.Top,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 titleTxt = { Visibility = _windowMode == WindowMode.New ? Visibility.Visible : Visibility.Hidden },
-
+                
             };
             newFiled.titleTxt.Text = newFiled.lbl.Text;
             newFiled.titleTxt.SelectAll();

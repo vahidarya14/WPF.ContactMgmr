@@ -10,6 +10,7 @@ namespace ContactMgr.Components
     {
         public string Title { get { return lbl.Text; } set { lbl.Text = value; titleTxt.Text = value; } }
         public string Value { get { return txt.Text; } set { txt.Text = value; } }
+        public string HiddenValue { get { return hiddenTxt.Text; } set { hiddenTxt.Text = value; } }
 
         public Field()
         {

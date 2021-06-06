@@ -37,8 +37,21 @@ namespace LightAccessORM
 
         public virtual int Update(T c)
         {
-            var q = new Reflection().MakeUpdateQuery(c);
-            return CommandText(q);
+            var queries = new Reflection().UpdateQuery(c);
+
+            var newObjIds = new List<(long id, string tbl)>();
+            var ss = 0;
+            for (var i = queries.Count; i > 0; i--)
+            {
+                var query =
+                    queries[i - 1].masterTbl == null ? queries[i - 1].query :
+                    queries[i - 1].query.Replace($"@{queries[i - 1].masterTbl}Id", $"{newObjIds.First(x => x.tbl == queries[i - 1].masterTbl).id}");
+                ss = CommandText(query);
+                var lastId =long.Parse( c.GetType().GetProperty("Id").GetValue(c).ToString());
+                newObjIds.Add((lastId, queries[i - 1].tbl));
+            }
+
+            return ss;
         }
 
 
@@ -117,6 +130,7 @@ namespace LightAccessORM
             /// <returns></returns>
             public List<(string query, string tbl, string masterTbl)> AddQuery(object c)
             {
+                _addQueries = new List<(string query, string tbl, string masterTbl)>();
                 MakeAddQuery(c);
                 return _addQueries;
             }
@@ -156,12 +170,12 @@ namespace LightAccessORM
                     var isIgnored = attrs.Any(x => x is Ignore);
                     if (isIgnored) continue;
 
-                    var fied = attrs.FirstOrDefault(x => x is FieldName);
-                    var fielsName = fied != null ? ((FieldName)fied).Field : props[i].Name;
+                    var field = attrs.FirstOrDefault(x => x is FieldName);
+                    var fieldName = field != null ? ((FieldName)field).Field : props[i].Name;
 
-                    if (!string.IsNullOrWhiteSpace(masterTbl) && props[i].Name.ToLower() == $"{masterTbl.ToLower()}id")
+                    if (!string.IsNullOrWhiteSpace(masterTbl) && fieldName.ToLower() == $"{masterTbl.ToLower()}id")
                     {
-                        q += $"@{masterTbl}Id,";
+                        q += $" @{masterTbl}Id,";
                         continue;
                     }
 
@@ -207,12 +221,26 @@ namespace LightAccessORM
             /// </summary>
             /// <param name="c"></param>
             /// <returns></returns>
-            public string MakeUpdateQuery(object c)
+              public List<(string query, string tbl, string masterTbl)> UpdateQuery(object c)
             {
-                var subclassess = new List<string>();
-
+                _addQueries = new List<(string query, string tbl, string masterTbl)>();
+                MakeUpdateQuery(c);
+                return _addQueries;
+            }
+        public void MakeUpdateQuery(object c, string masterTbl = null)
+            {
                 var objType = c.GetType();
-                var q = $"UPDATE  [{objType.Name}] SET ";
+                var tblAttr = objType.GetCustomAttributes(true).FirstOrDefault(x => x is TableName);
+                var tblName = tblAttr != null ? ((TableName)tblAttr).Name : objType.Name;
+
+                var id = objType.GetProperty("Id").GetValue(c);
+                if (id.ToString() == "0")
+                {
+                    MakeAddQuery(c, masterTbl);
+                    return;
+                }
+
+                var q = $"UPDATE  [{tblName}] SET ";
                 var props = objType.GetProperties();
                 for (int i = 0; i < props.Length; i++)
                 {
@@ -223,9 +251,14 @@ namespace LightAccessORM
                     var isIgnored = attrs.Any(x => x is Ignore);
                     if (isIgnored) continue;
 
-                    var fied = attrs.FirstOrDefault(x => x is FieldName);
-                    var fielsName = fied != null ? ((FieldName)fied).Field : props[i].Name;
+                    var field = attrs.FirstOrDefault(x => x is FieldName);
+                    var fieldName = field != null ? ((FieldName)field).Field : props[i].Name;
 
+                    if (!string.IsNullOrWhiteSpace(masterTbl) && props[i].Name.ToLower() == $"{masterTbl.ToLower()}id")
+                    {
+                        q += $"{fieldName}=@{masterTbl}Id,";
+                        continue;
+                    }
 
                     if (props[i].PropertyType.IsClass && props[i].PropertyType != typeof(string))
                     {
@@ -236,18 +269,20 @@ namespace LightAccessORM
                             {
                                 foreach (object o in item)
                                 {
-                                    subclassess.Add(MakeUpdateQuery(o));
+                                    MakeUpdateQuery(o, tblName);
                                 }
                             }
                         }
                         else
                         {
-
+                            var o = props[i].GetValue(c, null);
+                            if (o != null)
+                                MakeUpdateQuery(o, tblName);
                         }
                     }
                     else
                     {
-                        q += $" [{fielsName}]=";
+                        q += $" [{fieldName}]=";
                         if (props[i].PropertyType == typeof(string))
                             q += $"'{props[i].GetValue(c)}',";
                         else if (props[i].PropertyType.IsEnum)
@@ -260,7 +295,7 @@ namespace LightAccessORM
                     }
                 }
                 q = $"{q.Substring(0, q.Length - 1)} WHERE Id={objType.GetProperty("Id").GetValue(c)}";
-                return q;
+                _addQueries.Add((q, tblName, masterTbl));
             }
 
 

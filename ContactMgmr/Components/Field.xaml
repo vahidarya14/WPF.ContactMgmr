@@ -16,5 +16,6 @@
         <TextBox Margin="120,0,0,0" Height="28" VerticalAlignment="Top"  TabIndex="0" Name="txt" HorizontalAlignment="Left" Width="186" PreviewMouseDown="TxtOnMouseDown" />
 
         <TextBox Margin="0,0,0,0" Height="28" VerticalAlignment="Top"  TabIndex="0" Name="titleTxt" HorizontalAlignment="Left" Width="201" Background="#FFF0F3D7" Visibility="Hidden" TextChanged="ChangeTitle" KeyDown="TitleTxtKeyDown1" />
+        <TextBox  Name="hiddenTxt"  Visibility="Collapsed" Text="0" />
     </Grid>
 </UserControl>
