@@ -10,18 +10,11 @@ namespace DAL.Access
     public class ContactRepository : Reposirory<Contact>
     {
 
-        public ContactRepository():base(StaticPublic.MdbPath){}
+        public ContactRepository() : base(StaticPublic.MdbPath) { }
 
         public List<Contact> Select()
         {
-            var reader = _cmd.ExecuteReader("Select * from Contact order by [Company]");
-
-            var rowList = new List<Contact>();
-            while (reader != null && reader.Read())
-            {
-                var values = new object[reader.FieldCount];
-                var i = reader.GetValues(values);
-                rowList.Add(new Contact
+            var rowList = Select("Select * from Contact order by [Company]",(values) =>new Contact
                 {
                     Id = long.Parse(values[0].ToString()),
                     Name = values[1].ToString(),
@@ -37,37 +30,26 @@ namespace DAL.Access
                     Tel = values[11].ToString(),
                     Gender = values[12].ToString().ToGender(),
                     Remark = values[13].ToString(),
-                });
-            }
-            reader.Close();
+                }
+            );
 
-            var extfid = SelectContactExtraFields("Select * from ContactExtraFiled");
-            foreach (var contact in rowList)
-            {
-                contact.ExtraFields = extfid.Where(a => a.ContactId == contact.Id).ToList();
-            }
 
-            return rowList;
-        }
 
-        public List<ExtraField> SelectContactExtraFields(string query)
-        {
-            var reader = _cmd.ExecuteReader(query);
-
-            var rowList = new List<ExtraField>();
-            while (reader != null && reader.Read())
-            {
-                var values = new object[reader.FieldCount];
-                var i = reader.GetValues(values);
-                rowList.Add(new ExtraField
+            var extfid = Select("Select * from ContactExtraFiled",(values) => new ExtraField
                 {
                     Id = long.Parse(values[0].ToString()),
                     Key = values[1].ToString(),
                     Value = values[2].ToString(),
                     ContactId = long.Parse(values[3].ToString())
-                });
+                }
+            );
+
+
+            foreach (var contact in rowList)
+            {
+                contact.ExtraFields = extfid.Where(a => a.ContactId == contact.Id).ToList();
             }
-            reader.Close();
+
             return rowList;
         }
 
@@ -114,10 +96,10 @@ namespace DAL.Access
 
         //}
 
-        public  int Delete(long id)
+        public int Delete(long id)
         {
             var ss = CommandText("DELETE FROM ContactExtraFiled WHERE [Contactid]=" + id);
-            ss = Delete( id,true);
+            ss = Delete(id, true);
 
             return ss;
         }

@@ -99,21 +99,36 @@ namespace LightAccessORM
             return reader.ToString();
         }
 
-        public ArrayList SelectCommand(string query)
+        public List<T> Select(string query,Func<object[],T> makeTFromDataRow)
         {
             var reader = _cmd.ExecuteReader(query);
 
-            var rowList = new ArrayList();
+            var rowList = new List<T>();
             while (reader != null && reader.Read())
             {
                 var values = new object[reader.FieldCount];
-                //var i = reader.GetValues(values);
-                rowList.Add(values);
+                reader.GetValues(values);
+                var t=makeTFromDataRow(values);
+                rowList.Add(t);
             }
             reader.Close();
             return rowList;
         }
+        public List<T> Select<T>(string query, Func<object[], T> makeTFromDataRow)
+        {
+            var reader = _cmd.ExecuteReader(query);
 
+            var rowList = new List<T>();
+            while (reader != null && reader.Read())
+            {
+                var values = new object[reader.FieldCount];
+                reader.GetValues(values);
+                var t = makeTFromDataRow(values);
+                rowList.Add(t);
+            }
+            reader.Close();
+            return rowList;
+        }
 
 
         //------------------------
